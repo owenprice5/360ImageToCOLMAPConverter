@@ -9,7 +9,7 @@ A GUI tool for converting Agisoft Metashape panoramic camera projects into COLMA
 ## Features
 
 - **Metashape → COLMAP** — converts Metashape camera XML exports (spherical + frame cameras) into a complete COLMAP sparse reconstruction folder (`sparse/0/`, `images/`, `points3D.txt`)
-- **GPU acceleration** — uses CuPy/CUDA for ~80 img/s conversion on a modern GPU; falls back to CPU multiprocessing automatically
+- **GPU acceleration** — uses CuPy/CUDA for accelerated conversion on a modern GPU; falls back to CPU multiprocessing automatically
 - **Equirectangular → perspective** — projects 360° panoramas into cubemap faces (front, back, left, right, up, down) plus optional diagonal and 45° views
 - **COLMAP Rig pipeline** — for users without Metashape: converts raw equirectangular images and runs the full COLMAP feature extraction → rig configuration → matching → mapping pipeline automatically, with known camera intrinsics locked in
 - **Job queue** — add multiple projects, run overnight, save/load queue to JSON
@@ -150,6 +150,7 @@ GPU batch size is auto-calculated from available VRAM, or can be set manually in
 - Write output to an SSD rather than HDD
 - If using HDD, the GPU may outpace disk write speed
 - Check Windows Defender isn't scanning output files in real-time (add output folder to exclusions)
+- If consistently writing files, defragmenting the HDD will improve performance. Writing may start and stop if this is not done. (Only occurs when potentially writing  500,000 plus images in a short time span)
 
 **Windows Security blocks CuPy**
 - Go to Windows Security → Virus & threat protection → Exclusions
