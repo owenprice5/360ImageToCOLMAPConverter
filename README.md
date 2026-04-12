@@ -24,7 +24,7 @@ A GUI tool for converting Agisoft Metashape panoramic camera projects into COLMA
 ## Requirements
 
 ### Required
-- Python 3.10+
+- Python 3.10+ (other versions may work but was intended for Python 3.10. Other versions may conflict with numpy/Pillow)
 - [numpy](https://numpy.org/)
 - [Pillow](https://python-pillow.org/)
 
