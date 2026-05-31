@@ -40,6 +40,10 @@ All required Python packages can be installed from the **Dependencies** tab insi
 
 ## Installation
 
+ALL DEPENDENCIES CAN BE INSTALLED DIRECLTY FROM THE SCRIPT - No need for any coding.
+
+If you want to install manually then here's how you do it.
+
 ```bash
 # Clone or download the repository
 git clone https://github.com/yourusername/metashape-colmap-converter.git
@@ -57,7 +61,7 @@ Then run:
 python import_47.py
 ```
 
-No build step required. The app opens directly. Additionally, double clicking the python file should open it.
+No build step required. The app opens directly. Additionally, double clicking the python file will open it.
 
 ---
 
@@ -66,15 +70,16 @@ No build step required. The app opens directly. Additionally, double clicking th
 ### Metashape workflow
 
 1. Export cameras from Metashape: `File → Export → Export Cameras` (save as XML)
-2. Open the app and go to the **Metashape** tab
-3. Either pick a **Project Root Folder** (auto-fills all paths) or set paths manually:
+2. Export sparse point cloud as .ply
+3. Open the app and go to the **Metashape** tab
+4. Either pick a **Project Root Folder** (auto-fills all paths) or set paths manually:
    - **Cameras XML** — Metashape camera export
    - **Spherical XML** — optional separate spherical camera export
    - **Images folder** — folder containing equirectangular panoramas
    - **Point Cloud** — optional `.ply` for `points3D.txt`
    - **Output folder** — where COLMAP output will be written
-4. Configure view directions in **Views & Export** tab
-5. Click **Convert →** or **+ Add to Queue**
+5. Configure view directions in **Views & Export** tab
+6. Click **Convert →** or **+ Add to Queue**
 
 Output structure:
 ```
@@ -132,10 +137,6 @@ With CuPy installed and a CUDA-capable GPU, the converter uses a pipelined GPU r
 Loader thread → GPU render thread → Writer threads
 ```
 
-Performance scales with GPU VRAM. A 4070 Ti Super achieves ~80 img/s at 1024px output. CPU fallback uses Python multiprocessing.
-
-GPU batch size is auto-calculated from available VRAM, or can be set manually in the Performance tab.
-
 > **Note:** For best performance, write output to an SSD. HDD write speed can become the bottleneck at high GPU throughput.
 
 ---
@@ -148,7 +149,7 @@ GPU batch size is auto-calculated from available VRAM, or can be set manually in
 
 **Conversion is slow / stops frequently**
 - Write output to an SSD rather than HDD
-- If using HDD, the GPU may outpace disk write speed
+- If using HDD, the GPU may outpace disk write speed bottlenecking performance
 - Check Windows Defender isn't scanning output files in real-time (add output folder to exclusions)
 - If consistently writing files, defragmenting the HDD will improve performance. Writing may start and stop if this is not done. (Only occurs when potentially writing  500,000 plus images in a short time span)
 
